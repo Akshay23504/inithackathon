@@ -16,14 +16,15 @@ import java.util.List;
 
 import init.hackathon.com.inithackathon.R;
 import init.hackathon.com.inithackathon.models.MovieSnap;
+import init.hackathon.com.inithackathon.models.ResponseMovieData;
 
 public class MovieListViewAdapter extends RecyclerView.Adapter<MovieListViewAdapter.ViewHolder> {
 
-    private List<MovieSnap> movieSnapList;
+    private List<ResponseMovieData> responseMovieDatas;
     private Context context;
 
-    public MovieListViewAdapter(List<MovieSnap> movieSnapList, Context context) {
-        this.movieSnapList = movieSnapList;
+    public MovieListViewAdapter(List<ResponseMovieData> responseMovieDatas, Context context) {
+        this.responseMovieDatas = responseMovieDatas;
         this.context = context;
     }
 
@@ -35,14 +36,14 @@ public class MovieListViewAdapter extends RecyclerView.Adapter<MovieListViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final MovieSnap movieSnap = movieSnapList.get(position);
-        Picasso.with(context).load(movieSnap.getResponseMovieData().get(position).getImageUrl()).into(holder.imageView);
-        holder.textView.setText(movieSnap.getResponseMovieData().get(position).getName());
+        final ResponseMovieData responseMovieData = responseMovieDatas.get(position);
+        Picasso.with(context).load(responseMovieData.getImageUrl()).into(holder.imageView);
+        holder.textView.setText(responseMovieData.getName());
 
         holder.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                Toast.makeText(view.getContext(), movieSnap.getResponseMovieData().get(0).getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), responseMovieData.getName(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -50,7 +51,7 @@ public class MovieListViewAdapter extends RecyclerView.Adapter<MovieListViewAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return responseMovieDatas.size();
     }
 
     @Override

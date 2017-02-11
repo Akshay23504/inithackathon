@@ -17,15 +17,11 @@ import init.hackathon.com.inithackathon.models.MusicSnap;
 
 public class MovieSnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolder> {
 
-    private List<MovieSnap> movieSnapList;
+    private MovieSnap movieSnap;
     public static final int HORIZONTAL = 1;
 
-    public MovieSnapAdapter() {
-        movieSnapList = new ArrayList<>();
-    }
-
     public void addMovieSnap(MovieSnap movieSnap) {
-        movieSnapList.add(movieSnap);
+        this.movieSnap = movieSnap;
     }
 
     @Override
@@ -40,15 +36,14 @@ public class MovieSnapAdapter extends RecyclerView.Adapter<SnapAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(SnapAdapter.ViewHolder holder, int position) {
-        MovieSnap movieSnap = movieSnapList.get(position);
         holder.textView.setText(movieSnap.getText());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        holder.recyclerView.setAdapter(new MovieListViewAdapter(movieSnapList, holder.recyclerView.getContext()));
+        holder.recyclerView.setAdapter(new MovieListViewAdapter(movieSnap.getResponseMovieData(), holder.recyclerView.getContext()));
     }
 
     @Override
     public int getItemCount() {
-        return movieSnapList.size();
+        return 1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

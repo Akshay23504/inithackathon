@@ -55,11 +55,11 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
-        /*recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);*/
+        recyclerView.setHasFixedSize(true);
 
-       /* final ApiInterface facebookRequestApiInterface = ApiClient.getClient().create(ApiInterface.class);
+        final ApiInterface facebookRequestApiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<RequestMovieData> requestMovieDataCall = facebookRequestApiInterface.getMovieLiked("movies", SplashScreenActivity.getAccessToken());
         requestMovieDataCall.enqueue(new Callback<RequestMovieData>() {
 
@@ -91,7 +91,7 @@ public class MovieFragment extends Fragment {
             public void onFailure(Call<RequestMovieData> call, Throwable t) {
                 t.printStackTrace();
             }
-        });*/
+        });
 
         return view;
     }
@@ -101,9 +101,7 @@ public class MovieFragment extends Fragment {
 
         MovieSnapAdapter movieSnapAdapter = new MovieSnapAdapter();
 
-        for (ResponseMovieData movieData : responseMovieDatas) {
-            movieSnapAdapter.addMovieSnap(new MovieSnap("Recommended for you", responseMovieDatas));
-        }
+        movieSnapAdapter.addMovieSnap(new MovieSnap("Recommended for you", responseMovieDatas));
 
         recyclerView.setAdapter(movieSnapAdapter);
     }
