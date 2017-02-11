@@ -5,7 +5,9 @@ import com.facebook.AccessToken;
 import java.util.List;
 
 import init.hackathon.com.inithackathon.models.MovieResponse;
+import init.hackathon.com.inithackathon.models.RequestMovieData;
 import init.hackathon.com.inithackathon.models.RequestMusicData;
+import init.hackathon.com.inithackathon.models.ResponseMovieData;
 import init.hackathon.com.inithackathon.models.ResponseMusicData;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -21,7 +23,13 @@ public interface ApiInterface {
     @GET("me")
     Call<RequestMusicData> getMusicLiked(@Query("fields") String music, @Query("access_token") String accessToken);
 
+    @GET("me")
+    Call<RequestMovieData> getMovieLiked(@Query("fields") String music, @Query("access_token") String accessToken);
+
     @POST
     Call<List<ResponseMusicData>> getSimilarMusic(@Url String url);
+
+    @POST
+    Call<List<ResponseMovieData>> getSimilarMovie(@Url String url);
 
 }

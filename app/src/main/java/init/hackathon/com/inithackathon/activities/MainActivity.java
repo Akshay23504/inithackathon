@@ -90,11 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if (SplashScreenActivity.checkAccessToken()) {
-            menu.add(0, LOGOUT, Menu.NONE, getResources().getString(R.string.logout));
-        } else {
-            onBackPressed();
-        }
+        menu.add(0, LOGOUT, Menu.NONE, getResources().getString(R.string.logout));
         return super.onPrepareOptionsMenu(menu);
     }
 

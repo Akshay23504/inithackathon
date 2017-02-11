@@ -2,8 +2,6 @@ package init.hackathon.com.inithackathon.adapters;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +15,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import init.hackathon.com.inithackathon.R;
-import init.hackathon.com.inithackathon.models.MovieTemp;
-import init.hackathon.com.inithackathon.models.TopTracks;
+import init.hackathon.com.inithackathon.models.MovieSnap;
 
-public class MusicListViewAdapter extends RecyclerView.Adapter<MusicListViewAdapter.ViewHolder> {
+public class MovieListViewAdapter extends RecyclerView.Adapter<MovieListViewAdapter.ViewHolder> {
 
-    private List<TopTracks> topTracksList;
+    private List<MovieSnap> movieSnapList;
     private Context context;
 
-    public MusicListViewAdapter(List<TopTracks> topTracksList, Context context) {
-        this.topTracksList = topTracksList;
+    public MovieListViewAdapter(List<MovieSnap> movieSnapList, Context context) {
+        this.movieSnapList = movieSnapList;
         this.context = context;
     }
 
@@ -38,18 +35,14 @@ public class MusicListViewAdapter extends RecyclerView.Adapter<MusicListViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final TopTracks topTracks = topTracksList.get(position);
-        Picasso.with(context).load(topTracks.getImageUrl()).into(holder.imageView);
-        holder.textView.setText(topTracks.getName());
+        final MovieSnap movieSnap = movieSnapList.get(position);
+        Picasso.with(context).load(movieSnap.getResponseMovieData().get(position).getImageUrl()).into(holder.imageView);
+        holder.textView.setText(movieSnap.getResponseMovieData().get(position).getName());
 
         holder.setClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-//                Toast.makeText(view.getContext(), topTracks.getName(), Toast.LENGTH_LONG).show();
-                final Intent intent = new Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(topTracks.getUri()));
-                view.getContext().startActivity(intent);
+                Toast.makeText(view.getContext(), movieSnap.getResponseMovieData().get(0).getName(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -57,7 +50,7 @@ public class MusicListViewAdapter extends RecyclerView.Adapter<MusicListViewAdap
 
     @Override
     public int getItemCount() {
-        return topTracksList.size();
+        return 0;
     }
 
     @Override

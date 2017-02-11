@@ -13,9 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import init.hackathon.com.inithackathon.R;
+import init.hackathon.com.inithackathon.activities.SplashScreenActivity;
+import init.hackathon.com.inithackathon.adapters.MovieSnapAdapter;
 import init.hackathon.com.inithackathon.adapters.SnapAdapter;
+import init.hackathon.com.inithackathon.models.MovieSnap;
 import init.hackathon.com.inithackathon.models.MovieTemp;
+import init.hackathon.com.inithackathon.models.MusicSnap;
+import init.hackathon.com.inithackathon.models.RequestFieldData;
+import init.hackathon.com.inithackathon.models.RequestMovieData;
+import init.hackathon.com.inithackathon.models.RequestMusicData;
+import init.hackathon.com.inithackathon.models.ResponseMovieData;
+import init.hackathon.com.inithackathon.models.ResponseMusicData;
 import init.hackathon.com.inithackathon.models.Snap;
+import init.hackathon.com.inithackathon.rest.ApiClient;
+import init.hackathon.com.inithackathon.rest.ApiInterface;
+import init.hackathon.com.inithackathon.rest.HerokuApiClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Akshay on 10-02-2017.
@@ -39,56 +54,58 @@ public class MovieFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        /*View view = inflater.inflate(R.layout.movie_fragment, container, false);
-        names = new ArrayList<>(Arrays.asList("MOVIE1", "MOVIE2", "MOVIE3", "MOVIE4", "MOVIE5", "MOVIES6", "MOVIES7"));
-        imageNames = new ArrayList<>(Arrays.asList(R.drawable.activity_splash_init,
-                R.drawable.activity_splash_init, R.drawable.activity_splash_init,
-                R.drawable.activity_splash_init, R.drawable.activity_splash_init,
-                R.drawable.activity_splash_init, R.drawable.activity_splash_init));
-        recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
-
-        List<MovieTemp> movieTemps = new ArrayList<>();
-        movieTemps.add(new MovieTemp("MOVIE1", null, MovieTemp.TITLE, 0));
-        movieTemps.add(new MovieTemp("MOVIE2", null, MovieTemp.TITLE, 0));
-        movieTemps.add(new MovieTemp("MOVIE3", "DESCRIPTION3", MovieTemp.LIST, R.drawable.activity_splash_init));
-        movieTemps.add(new MovieTemp("MOVIE4", null, MovieTemp.TITLE, 0));
-        movieTemps.add(new MovieTemp("MOVIE5", null, MovieTemp.TITLE, 0));
-        movieTemps.add(new MovieTemp("MOVIE6", "DESCRIPTION6", MovieTemp.LIST, R.drawable.activity_splash_init));
-        movieTemps.add(new MovieTemp("MOVIE7", null, MovieTemp.TITLE, 0));
-        movieTemps.add(new MovieTemp("MOVIE8", "DESCRIPTION8", MovieTemp.LIST, R.drawable.activity_splash_init));
-        movieTemps.add(new MovieTemp("MOVIE9", "DESCRIPTION9", MovieTemp.LIST, R.drawable.activity_splash_init));
-        movieTemps.add(new MovieTemp("MOVIE10", null, MovieTemp.TITLE, 0));
-
-        //recyclerView.setHasFixedSize(true);
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
-
-        adapter = new CustomListViewAdapter(movieTemps, getActivity());
-
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
-        return view;*/
-
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
+        /*recyclerView = (RecyclerView) view.findViewById(R.id.movie_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        setupAdapter();
+        recyclerView.setHasFixedSize(true);*/
+
+       /* final ApiInterface facebookRequestApiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<RequestMovieData> requestMovieDataCall = facebookRequestApiInterface.getMovieLiked("movies", SplashScreenActivity.getAccessToken());
+        requestMovieDataCall.enqueue(new Callback<RequestMovieData>() {
+
+            @Override
+            public void onResponse(Call<RequestMovieData> call, Response<RequestMovieData> response) {
+                RequestMovieData movieDatas = response.body();
+                StringBuilder stringBuilder = new StringBuilder("movies/");
+                for (RequestFieldData requestFieldData : movieDatas.getMovie().fieldDataList) {
+                    stringBuilder.append(requestFieldData.getName()).append(",");
+                }
+                final ApiInterface facebookRequestApiInterface = HerokuApiClient.getClient().create(ApiInterface.class);
+                Call<List<ResponseMovieData>> responseMovieDataCall = facebookRequestApiInterface.
+                        getSimilarMovie(stringBuilder.replace(stringBuilder.lastIndexOf(","),
+                                stringBuilder.lastIndexOf(",") + 1, "").toString());
+                responseMovieDataCall.enqueue(new Callback<List<ResponseMovieData>>() {
+                    @Override
+                    public void onResponse(Call<List<ResponseMovieData>> call, Response<List<ResponseMovieData>> response) {
+                        setupAdapter(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<ResponseMovieData>> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<RequestMovieData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });*/
+
         return view;
     }
 
-    private void setupAdapter() {
+    private void setupAdapter(List<ResponseMovieData> responseMovieDatas) {
         List<MovieTemp> movieTemps = getMovie();
 
-        SnapAdapter snapAdapter = new SnapAdapter();
-        snapAdapter.addSnap(new Snap("RECOMMENDED FOR YOU", movieTemps));
-        snapAdapter.addSnap(new Snap("TOP RATED", movieTemps));
-        snapAdapter.addSnap(new Snap("OLD MOVIES", movieTemps));
+        MovieSnapAdapter movieSnapAdapter = new MovieSnapAdapter();
 
-        recyclerView.setAdapter(snapAdapter);
+        for (ResponseMovieData movieData : responseMovieDatas) {
+            movieSnapAdapter.addMovieSnap(new MovieSnap("Recommended for you", responseMovieDatas));
+        }
+
+        recyclerView.setAdapter(movieSnapAdapter);
     }
 
     private List<MovieTemp> getMovie() {

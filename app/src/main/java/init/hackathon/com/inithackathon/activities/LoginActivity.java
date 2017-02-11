@@ -1,9 +1,12 @@
 package init.hackathon.com.inithackathon.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -13,6 +16,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 
 import init.hackathon.com.inithackathon.R;
 
@@ -33,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         if (accessToken != null) {
             token = accessToken.getToken();
         }
-        facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        /*facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Snackbar.make(findViewById(R.id.facebook_login), "Authentication successful", Snackbar.LENGTH_LONG).show();
@@ -48,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(FacebookException error) {
                 Snackbar.make(findViewById(R.id.facebook_login), "Authentication failed", Snackbar.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         // Generate Developer environment hash key through code
-        /*try {
+       /* try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo("init.hackathon.com.inithackathon", PackageManager.GET_SIGNATURES);
-            for (Signature signature : packageInfo.signatures) {
+            for (android.content.pm.Signature signature : packageInfo.signatures) {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA");
                 messageDigest.update(signature.toByteArray());
                 Log.d("KEY", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
