@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Init Hackathon</string>
+    <string name="team_name">Swat Kats</string>
+    <string name="hackathon_name">Init 2017</string>
+
+    <string name="facebook_app_id">746863978811703</string>
+
+    <string name="movie_text_temp">MOVIES</string>
+    <string name="book_text_temp">BOOKS</string>
+    <string name="tv_series_text_temp">TV SERIES</string>
+    <string name="music_text_temp">MUSIC</string>
+
+    <string name="logout">Logout</string>
+</resources>
