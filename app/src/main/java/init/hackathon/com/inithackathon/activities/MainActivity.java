@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TextView jsonResponse = (TextView) findViewById(R.id.json_response_main);
 
+/*
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<MovieResponse> movieCall = apiInterface.getTopRatedMovies(API_KEY);
         movieCall.enqueue(new Callback<MovieResponse>() {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(findViewById(R.id.json_response_main), "operation failed", Snackbar.LENGTH_LONG).show();
             }
         });
+*/
 
     }
 

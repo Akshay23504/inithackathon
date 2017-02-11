@@ -21,12 +21,14 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.Arrays;
+
 import init.hackathon.com.inithackathon.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
     CallbackManager callbackManager;
-    private final int SPLASH_TIMEOUT = 3000;
+    private final int SPLASH_TIMEOUT = 300;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     anotherAppName.setText(getResources().getString(R.string.app_name));
                     appName.setText("");
 
+                    facebookLoginButton.setReadPermissions(Arrays.asList("user_likes"));
                     facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                         @Override
                         public void onSuccess(LoginResult loginResult) {
@@ -91,12 +94,15 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public static boolean checkAccessToken() {
+        return !getAccessToken().equals("");
+    }
+
+    public static String getAccessToken() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        String token = "";
         if (accessToken != null) {
-            token = accessToken.getToken();
+            return accessToken.getToken();
         }
-        return !token.equals("");
+        return "";
     }
 
     private void redirectToMainActivity() {
