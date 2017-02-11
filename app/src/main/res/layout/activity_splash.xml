@@ -3,46 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/activity_splash_background" android:id="@+id/relativeLayoutSplashScreen">
 
-    <TextView
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:textColor="@color/colorWhite"
-        android:id="@+id/appNameSplashScreenTextView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:typeface="serif"
-        android:textSize="15sp"
-        android:id="@+id/hackathonNameSplashScreenTextView"
-        android:layout_above="@+id/teamNameSplashScreenTextView"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:typeface="serif"
-        android:textSize="15sp"
-        android:id="@+id/teamNameSplashScreenTextView"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:textColor="@color/colorWhite"
-        android:id="@+id/anotherAppNameSplashScreenTextView"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@+id/appNameSplashScreenTextView"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
 

@@ -15,7 +15,7 @@ public class ResponseMusicData {
     @JsonProperty("topTracks")
     private List<TopTracks> topTracksList;
 
-    @JsonProperty("imageUrl")
+    @JsonProperty("imageURL")
     private String imageUrl;
 
     public ResponseMusicData() {

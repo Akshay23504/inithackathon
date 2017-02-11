@@ -34,19 +34,15 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        final TextView appName = (TextView) findViewById(R.id.appNameSplashScreenTextView);
-        final TextView anotherAppName = (TextView) findViewById(R.id.anotherAppNameSplashScreenTextView);
-        TextView hackathonName = (TextView) findViewById(R.id.hackathonNameSplashScreenTextView);
-        TextView teamName = (TextView) findViewById(R.id.teamNameSplashScreenTextView);
         final LoginButton facebookLoginButton = new LoginButton(this);
         facebookLoginButton.setId(R.id.facebook_login);
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/WinterCalligraphy.ttf");
+/*        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/WinterCalligraphy.ttf");
         appName.setTypeface(typeface);
         anotherAppName.setTypeface(typeface);
 
         hackathonName.setText(fromHtml("For <b><i>" + getResources().getString(R.string.hackathon_name) + "</i></b>"));
-        teamName.setText(fromHtml("By <b><i>" + getResources().getString(R.string.team_name) + "</i></b>"));
+        teamName.setText(fromHtml("By <b><i>" + getResources().getString(R.string.team_name) + "</i></b>")); */
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -62,11 +58,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                             ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
                     layoutParams.addRule(Gravity.CENTER_HORIZONTAL);
-                    layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-                    layoutParams.addRule(RelativeLayout.BELOW, appName.getId());
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    layoutParams.setMargins(0, 0, 0, 80);
                     relativeLayout.addView(facebookLoginButton, layoutParams);
-                    anotherAppName.setText(getResources().getString(R.string.app_name));
-                    appName.setText("");
 
                     facebookLoginButton.setReadPermissions(Arrays.asList("user_likes"));
                     facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

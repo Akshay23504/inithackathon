@@ -11,7 +11,7 @@ public class TopTracks {
     @JsonProperty("uri")
     private String uri;
 
-    @JsonProperty("imageUrl")
+    @JsonProperty("imageURL")
     private String imageUrl;
 
     public TopTracks() {

@@ -9,20 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.AccessToken;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import init.hackathon.com.inithackathon.R;
 import init.hackathon.com.inithackathon.activities.SplashScreenActivity;
-import init.hackathon.com.inithackathon.adapters.SnapAdapter;
+import init.hackathon.com.inithackathon.adapters.MusicSnapAdapter;
+import init.hackathon.com.inithackathon.models.MusicSnap;
 import init.hackathon.com.inithackathon.models.MovieTemp;
 import init.hackathon.com.inithackathon.models.RequestFieldData;
 import init.hackathon.com.inithackathon.models.RequestMusicData;
 import init.hackathon.com.inithackathon.models.ResponseMusicData;
-import init.hackathon.com.inithackathon.models.Snap;
 import init.hackathon.com.inithackathon.rest.ApiClient;
 import init.hackathon.com.inithackathon.rest.ApiInterface;
 import init.hackathon.com.inithackathon.rest.HerokuApiClient;
@@ -63,13 +60,12 @@ public class MusicFragment extends Fragment {
                 }
                 final ApiInterface facebookRequestApiInterface = HerokuApiClient.getClient().create(ApiInterface.class);
                 Call<List<ResponseMusicData>> responseMusicDataCall = facebookRequestApiInterface.
-                        getSimilarMusic("music/metallica");
-                        /*getSimilarMusic(stringBuilder.replace(stringBuilder.lastIndexOf(","),
-                                stringBuilder.lastIndexOf(",") + 1, "").toString());*/
+                        getSimilarMusic(stringBuilder.replace(stringBuilder.lastIndexOf(","),
+                                stringBuilder.lastIndexOf(",") + 1, "").toString());
                 responseMusicDataCall.enqueue(new Callback<List<ResponseMusicData>>() {
                     @Override
                     public void onResponse(Call<List<ResponseMusicData>> call, Response<List<ResponseMusicData>> response) {
-                        ResponseMusicData responseMusicData = response.body().get(0);
+                        setupAdapter(response.body());
                     }
 
                     @Override
@@ -85,19 +81,22 @@ public class MusicFragment extends Fragment {
             }
         });
 
-        setupAdapter();
         return view;
     }
 
-    private void setupAdapter() {
+    private void setupAdapter(List<ResponseMusicData> responseMusicData) {
         List<MovieTemp> movieTemps = getMovie();
 
-        SnapAdapter snapAdapter = new SnapAdapter();
-        snapAdapter.addSnap(new Snap("RECOMMENDED FOR YOU", movieTemps));
-        snapAdapter.addSnap(new Snap("TOP RATED", movieTemps));
-        snapAdapter.addSnap(new Snap("OLD MOVIES", movieTemps));
+        MusicSnapAdapter musicSnapAdapter = new MusicSnapAdapter();
 
-        recyclerView.setAdapter(snapAdapter);
+        for (ResponseMusicData musicData : responseMusicData) {
+            musicSnapAdapter.addMusicSnap(new MusicSnap(musicData.getName(), musicData.getTopTracksList()));
+        }
+
+        /*snapAdapter.addSnap(new Snap("TOP RATED", movieTemps));
+        snapAdapter.addSnap(new Snap("OLD MOVIES", movieTemps));*/
+
+        recyclerView.setAdapter(musicSnapAdapter);
     }
 
     private List<MovieTemp> getMovie() {
