@@ -54,7 +54,8 @@ public class MusicFragment extends Fragment {
             @Override
             public void onResponse(Call<RequestMusicData> call, Response<RequestMusicData> response) {
                 RequestMusicData musicDatas = response.body();
-                StringBuilder stringBuilder = new StringBuilder("music/");
+                /*StringBuilder stringBuilder = new StringBuilder("music/");
+                // TODO handle null condition and also in Movie section
                 for (RequestFieldData requestFieldData : musicDatas.music.fieldDataList) {
                     stringBuilder.append(requestFieldData.getName()).append(",");
                 }
@@ -72,7 +73,7 @@ public class MusicFragment extends Fragment {
                     public void onFailure(Call<List<ResponseMusicData>> call, Throwable t) {
                         t.printStackTrace();
                     }
-                });
+                });*/
             }
 
             @Override

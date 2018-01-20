@@ -75,10 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new MusicFragment(), "MUSIC");
         viewPagerAdapter.addFragment(new MovieFragment(), "MOVIES");
-        viewPagerAdapter.addFragment(new BookFragment(), "BOOKS");
-        viewPagerAdapter.addFragment(new TVSeriesFragment(), "TV SERIES");
+        viewPagerAdapter.addFragment(new MusicFragment(), "MUSIC");
         viewPager.setAdapter(viewPagerAdapter);
     }
 

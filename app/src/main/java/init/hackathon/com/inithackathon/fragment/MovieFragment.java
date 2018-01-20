@@ -67,24 +67,26 @@ public class MovieFragment extends Fragment {
             public void onResponse(Call<RequestMovieData> call, Response<RequestMovieData> response) {
                 RequestMovieData movieDatas = response.body();
                 StringBuilder stringBuilder = new StringBuilder("movies/");
-                for (RequestFieldData requestFieldData : movieDatas.getMovie().fieldDataList) {
-                    stringBuilder.append(requestFieldData.getName()).append(",");
-                }
-                final ApiInterface facebookRequestApiInterface = HerokuApiClient.getClient().create(ApiInterface.class);
-                Call<List<ResponseMovieData>> responseMovieDataCall = facebookRequestApiInterface.
-                        getSimilarMovie(stringBuilder.replace(stringBuilder.lastIndexOf(","),
-                                stringBuilder.lastIndexOf(",") + 1, "").toString());
-                responseMovieDataCall.enqueue(new Callback<List<ResponseMovieData>>() {
-                    @Override
-                    public void onResponse(Call<List<ResponseMovieData>> call, Response<List<ResponseMovieData>> response) {
-                        setupAdapter(response.body());
+                if (movieDatas != null) {
+                    for (RequestFieldData requestFieldData : movieDatas.getMovie().fieldDataList) {
+                        stringBuilder.append(requestFieldData.getName()).append(",");
                     }
+                    final ApiInterface facebookRequestApiInterface = HerokuApiClient.getClient().create(ApiInterface.class);
+                    Call<List<ResponseMovieData>> responseMovieDataCall = facebookRequestApiInterface.
+                            getSimilarMovie(stringBuilder.replace(stringBuilder.lastIndexOf(","),
+                                    stringBuilder.lastIndexOf(",") + 1, "").toString());
+                    responseMovieDataCall.enqueue(new Callback<List<ResponseMovieData>>() {
+                        @Override
+                        public void onResponse(Call<List<ResponseMovieData>> call, Response<List<ResponseMovieData>> response) {
+                            setupAdapter(response.body());
+                        }
 
-                    @Override
-                    public void onFailure(Call<List<ResponseMovieData>> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<List<ResponseMovieData>> call, Throwable t) {
+                            t.printStackTrace();
+                        }
+                    });
+                }
             }
 
             @Override
